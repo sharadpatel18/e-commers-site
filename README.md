@@ -25,5 +25,5 @@ Welcome to the development repository for our E-Commerce Site! This project is b
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/e-commerce-site.git
+   git clone https://github.com/sharadpatel18/e-commerce-site.git
    cd e-commerce-site
