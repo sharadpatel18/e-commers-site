@@ -30,16 +30,20 @@ Welcome to the development repository for our E-Commerce Site! This project is b
 
 2.Install dependencies for both server and client:
 
+
 # Server
-cd server
-npm install
-
+   ```bash
+      cd server
+      npm install
+   ```
 # Client
-cd ../client
-npm install
-
+   ```bash
+      cd ../client
+      npm install
+   ```
 3.Set up environment variables: Create a .env file in the root of the server directory with the following variables:
+   ```bash
+   JWT_SECRET="qwertyuiop"
 
-JWT_SECRET="qwertyuiop"
 
 
