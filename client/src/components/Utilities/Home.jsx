@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { showName } from "../../logic/NameShow";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+
+  const [user , setUser] = useState({});
+
+  useEffect(()=>{
+    const data = showName();
+    setUser(data);
+  },[])
+  console.log("Data")
+  console.log(user);
+  
   return (
     <div className="relative w-full h-fit">
       <section className="relative container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:flex-row lg:justify-between mb-11">

@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Login } from "../../api/Auth";
+import { useNavigate } from "react-router-dom";
+import { MyContext } from "../../context/MyConext";
 
-const Login = () => {
+const LoginComponent = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [responceData, setResponceData] = useState({});
+  const [showResponce, setShowResponce] = useState(false);
+  const Navigate = useNavigate();
+  const { handleChange } = useContext(MyContext)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (email == "" || password == "") {
+      return alert("something missing");
+    }
+    const data = {
+      email,
+      password,
+    };
+
+    const responce = await Login(data);
+    console.log(responce);
+    
+    setResponceData(responce);
+    localStorage.setItem('Token' , responce.Token)
+    if (responce.success) {
+      handleChange(true)
+      Navigate('/');
+    }
+  };
+
   return (
     <div className="auth-main">
       <div className="flex auth-container flex-col max-w-md p-6 rounded-md sm:p-10 dark:bg-gray-50 dark:text-gray-800">
@@ -11,7 +42,7 @@ const Login = () => {
             Sign in to access your account
           </p>
         </div>
-        <form noValidate="" action="" className="space-y-12">
+        <form noValidate="" className="space-y-12" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block mb-2 text-sm">
@@ -24,6 +55,8 @@ const Login = () => {
                 placeholder="leroy@jenkins.com"
                 className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
                 fdprocessedid="a55yim"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -46,13 +79,15 @@ const Login = () => {
                 placeholder="*****"
                 className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
                 fdprocessedid="v9uqds"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
           <div className="space-y-2">
             <div>
               <button
-                type="button"
+                type="submit"
                 className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50"
                 fdprocessedid="u4vx"
               >
@@ -77,4 +112,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginComponent;

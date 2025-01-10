@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { showName } from "../../logic/NameShow";
 import { Link, Outlet } from "react-router-dom";
+import { MyContext } from "../../context/MyConext";
+
 
 const Navbar = () => {
+  const [user, setUser] = useState({});
+  const {showNameBool} = useContext(MyContext)
+
+  useEffect(() => {
+    const data = showName();
+    setUser(data);
+  }, [showNameBool]);
+
   return (
     <header className="p-4">
       <div className="container flex justify-between h-16 mx-auto">
@@ -76,20 +87,37 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-        <div className="items-center flex-shrink-0 hidden lg:flex">
-          <Link
-            className="self-center mx-3 px-8 py-3 text-white bg-transparent border border-white rounded hover:bg-violet-400 hover:border-violet-400"
-            to="/login"
-          >
+        {Object.keys(user).length == 0 ? (
+          <div className="items-center flex-shrink-0 hidden lg:flex">
+            <Link
+              className="self-center mx-3 px-8 py-3 text-white bg-transparent border border-white rounded hover:bg-violet-400 hover:border-violet-400"
+              to="/login"
+            >
               Sign in
-          </Link>
-          <Link
-            className="self-center px-8 py-3 font-semibold text-gray-800 bg-violet-400 rounded hover:bg-violet-600"
-            to="/signup"
-          >
-            Sign up
-          </Link>
-        </div>
+            </Link>
+            <Link
+              className="self-center px-8 py-3 font-semibold text-gray-800 bg-violet-400 rounded hover:bg-violet-600"
+              to="/signup"
+            >
+              Sign up
+            </Link>
+          </div>
+        ) : (
+          <div className="items-center flex-shrink-0 hidden lg:flex">
+            <Link
+              className="self-center text-xl mx-3 px-8 py-3 text-white bg-transparent rounded hover:bg-violet-400 hover:border-violet-400"
+              to="/"
+            >
+              Hello, <b>{user.name}</b>
+            </Link>
+            <Link
+              className="self-center px-8 py-3 font-semibold text-gray-800 bg-violet-400 rounded hover:bg-violet-600"
+              to="/login"
+            >
+              Log Out
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );
