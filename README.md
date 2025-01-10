@@ -27,3 +27,19 @@ Welcome to the development repository for our E-Commerce Site! This project is b
    ```bash
    git clone https://github.com/sharadpatel18/e-commerce-site.git
    cd e-commerce-site
+
+2.Install dependencies for both server and client:
+
+# Server
+cd server
+npm install
+
+# Client
+cd ../client
+npm install
+
+3.Set up environment variables: Create a .env file in the root of the server directory with the following variables:
+
+JWT_SECRET="qwertyuiop"
+
+
