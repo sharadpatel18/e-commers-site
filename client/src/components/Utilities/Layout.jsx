@@ -13,7 +13,7 @@ const Layout = () => {
         muted
         className="absolute inset-0 object-cover w-full h-full -z-10"
       >
-        <source src={Video} type="video/mp4" />
+        <source src="https://drive.google.com/uc?export=view&id=1LgbUfRMwkDrDgOxH4u-y-EtqPbLwif63" type="video/mp4" />
       </video>
 
       {/* Navbar */}
