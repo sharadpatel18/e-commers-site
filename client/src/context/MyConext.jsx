@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react';
 
-export const MyContext = createContext();
+const MyContext = createContext();
 
-export const MyContextProvider = ({ children }) => {
+const MyContextProvider = ({ children }) => {
   const [showNameBool, setShowNameBool] = useState(false);
 
   const handleChange = (value) => {
@@ -15,3 +15,5 @@ export const MyContextProvider = ({ children }) => {
     </MyContext.Provider>
   );
 };
+
+export {MyContext ,MyContextProvider}

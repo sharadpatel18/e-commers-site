@@ -4,15 +4,6 @@ import Footer from "./Footer";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-
-  const [user , setUser] = useState({});
-
-  useEffect(()=>{
-    const data = showName();
-    setUser(data);
-  },[])
-  console.log("Data")
-  console.log(user);
   
   return (
     <div className="relative w-full h-fit">

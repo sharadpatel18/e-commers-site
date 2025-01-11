@@ -28,7 +28,7 @@ const LoginComponent = () => {
     setResponceData(responce);
     localStorage.setItem('Token' , responce.Token)
     if (responce.success) {
-      handleChange(true)
+      handleChange(true);
       Navigate('/');
     }
   };

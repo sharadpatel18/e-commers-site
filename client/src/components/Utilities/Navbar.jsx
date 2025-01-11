@@ -5,12 +5,15 @@ import { MyContext } from "../../context/MyConext";
 
 
 const Navbar = () => {
+  const Token = localStorage.getItem("Token");
   const [user, setUser] = useState({});
   const {showNameBool} = useContext(MyContext)
 
   useEffect(() => {
-    const data = showName();
-    setUser(data);
+    if (Token) {
+      const data = showName(Token);
+      setUser(data);
+    }
   }, [showNameBool]);
 
   return (
