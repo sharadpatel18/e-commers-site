@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const Authentication = (req, res) => {
-  try {
-    const Token = req.headers["authentication"];
-
+const Authentication = (req, res , next) => {
+  
+    const Token = req.headers['authentication'];
+    console.log(Token);
+    
     if (!Token) {
       return res
         .status(403)
@@ -12,7 +13,7 @@ const Authentication = (req, res) => {
     }
 
     try {
-      const decode = jwt.verify(auth, process.env.SECRET_KEY);
+      const decode = jwt.verify(Token, process.env.SECRET_KEY);
       req.user = decode;
       next();
     } catch (error) {
@@ -21,11 +22,6 @@ const Authentication = (req, res) => {
         .status(401)
         .json({ message: "unauthorized , jwt token is require" });
     }
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "internal server error", success: false });
-  }
 };
 
 module.exports={Authentication}

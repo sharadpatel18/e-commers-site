@@ -1,12 +1,19 @@
+const mongoose  = require('mongoose');
 const Item = require('../Model/CreateItemModel');
 
 const createItem = async (req,res) => {
     try {
-        const itemCreated = await Item.create(req.body); 
+        const {itemName , itemContent , itemImage , itemPrice , itemStoke , itemCatagory , userId} = req.body;
+        
+        const newId = new mongoose.Types.ObjectId(userId);
+
+        const itemCreated = await Item.create({itemName,itemContent,itemImage,itemCatagory,itemPrice,itemStoke,userId:newId}); 
         
         return res.status(200)
                     .json({message:"Item is Created" , success:true})
     } catch (error) {
+        console.log(error);
+        
         return res.status(500)
                     .json({message:"internal server error" , success:false})
     }

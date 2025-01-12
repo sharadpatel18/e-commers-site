@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app  = express();
 const authRoutes = require('./Routes/AuthRoute');
-const itemRoute = require('./Routes/AuthRoute');
+const itemRoute = require('./Routes/ItemRoutes');
 require('dotenv').config();
 
 mongoose.connect("mongodb://127.0.0.1:27017/e-commers")

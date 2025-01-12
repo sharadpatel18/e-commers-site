@@ -4,9 +4,9 @@ const { Authentication } = require('../Middleware/Auth');
 const itemRoute = require('express').Router();
 
 
-itemRoute.post('/createItem' , Authentication , createItem);
-itemRoute.post('/getallitem' , Authentication , getAllItem);
-itemRoute.post('/getitembyid/:id' , Authentication , getItemById);
-itemRoute.post('/getitembyuserid/:id' , Authentication , getItemByUserId);
+itemRoute.post('/createitem' , Authentication , createItem);
+itemRoute.get('/getallitem' , Authentication , getAllItem);
+itemRoute.get('/getitembyid/:id' , Authentication , getItemById);
+itemRoute.get('/getitembyuserid/:id' , Authentication , getItemByUserId);
 
 module.exports = itemRoute;

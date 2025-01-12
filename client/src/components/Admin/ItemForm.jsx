@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { MyContext } from "../../context/myConext";
+import { createProduct } from "../../api/product";
+import Toast from "../ChildComponets/Toast";
 
 const ItemForm = () => {
   const [itemName, setItemName] = useState("");
@@ -8,14 +11,50 @@ const ItemForm = () => {
   const [itemStoke, setItemStoke] = useState(0);
   const [itemPrice, setItemPrice] = useState(0);
   const [itemCatagory, setItemCatagory] = useState("");
+  const [responceData, setResponceData] = useState({});
+  const [showResponce, setShowResponce] = useState(false);
+  const {user , Token} = useContext(MyContext);  
 
-  const handleSubmit = () => {};
+
+  const imageSave = (e) => {
+    let render = new FileReader();
+    render.readAsDataURL(e.target.files[0]);
+    render.onload = () => {
+      setItemImage(render.result);
+    };
+    render.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      itemName:itemName,
+      itemContent:itemContent,
+      itemPrice:parseInt(itemPrice),
+      itemStoke:parseInt(itemStoke),
+      itemImage:itemImage,
+      itemCatagory:itemCatagory,
+      userId:user.id
+    }
+    const responce = createProduct(data , Token)
+    if (responce) {
+      setResponceData(responce);
+      setShowResponce(true)
+    }
+
+    setTimeout(()=>{
+      setShowResponce(false)
+    },3000)
+    
+  };
 
   return (
     <div className="products">
       <div className="flex products-container flex-col max-w-md rounded-md sm:p-10 dark:bg-gray-50 dark:text-gray-800">
         <div className="mb-8 text-center">
-          {/* {showResponce ? <Toast message={responceData.message} /> : null} */}
+          {showResponce ? <Toast message={responceData.message} /> : null}
           <h1 className="my-3 text-4xl font-bold">Item Form To Create</h1>
           <p className="text-sm dark:text-gray-600">
             Item Form to create your item
@@ -31,7 +70,7 @@ const ItemForm = () => {
                 type="text"
                 name="email"
                 id="email"
-                placeholder="sharad patel"
+                placeholder="iphone, mi tv ,etc.."
                 className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
                 fdprocessedid="a55yim"
                 value={itemName}
@@ -44,7 +83,7 @@ const ItemForm = () => {
               </label>
               <textarea
                 id="email"
-                placeholder="leroy@jenkins.com"
+                placeholder="About Your Product"
                 className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
                 fdprocessedid="a55yim"
                 value={itemContent}
@@ -127,6 +166,7 @@ const ItemForm = () => {
                 name="files"
                 id="files"
                 className="px-8 py-12 border-2 border-dashed rounded-md dark:border-gray-300 dark:text-gray-600 dark:bg-gray-100"
+                onChange={imageSave}
               />
             </div>
           </fieldset>

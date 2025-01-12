@@ -1,21 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { showName } from "../../logic/NameShow";
 import { Link, Outlet } from "react-router-dom";
 import { MyContext } from "../../context/MyConext";
 
 
 const Navbar = () => {
-  const Token = localStorage.getItem("Token");
-  const [user, setUser] = useState({});
-  const {showNameBool} = useContext(MyContext)
-
-  useEffect(() => {
-    if (Token) {
-      const data = showName(Token);
-      setUser(data);
-    }
-  }, [showNameBool]);
-
+  const {user } = useContext(MyContext);
+  
   return (
     <header className="p-4">
       <div className="container flex justify-between h-16 mx-auto">

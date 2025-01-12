@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { showName } from "../../logic/NameShow";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 
