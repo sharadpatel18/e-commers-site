@@ -3,11 +3,11 @@ const Item = require('../Model/CreateItemModel');
 
 const createItem = async (req,res) => {
     try {
-        const {itemName , itemContent , itemImage , itemPrice , itemStoke , itemCatagory , userId} = req.body;
+        const {itemName , itemContent , itemImage , itemPrice , itemStoke , itemCatagory , reviews , averageRating , totalRatings , userId} = req.body;
         
         const newId = new mongoose.Types.ObjectId(userId);
 
-        const itemCreated = await Item.create({itemName,itemContent,itemImage,itemCatagory,itemPrice,itemStoke,userId:newId}); 
+        const itemCreated = await Item.create({itemName,itemContent,itemImage,itemCatagory,itemPrice,itemStoke, reviews , averageRating , totalRatings ,userId:newId}); 
         
         return res.status(200)
                     .json({message:"Item is Created" , success:true})

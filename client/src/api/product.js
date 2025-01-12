@@ -31,4 +31,17 @@ const getAllProducts = async (Token) => {
     }
 }
 
-export {createProduct , getAllProducts}
+const getOneProductById = async (id,Token) => {
+    try {
+        const responce = await instance.get(`/getitembyid/${id}` , {
+            headers:{
+                'authentication':`${Token}`
+            }
+        })
+        return responce.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export {createProduct , getAllProducts , getOneProductById}

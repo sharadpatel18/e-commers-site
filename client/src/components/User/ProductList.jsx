@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getAllProducts } from "../../api/product";
 import { MyContext } from "../../context/myConext";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
   const { Token } = useContext(MyContext);
+  const Navigate = useNavigate();
   const [Products, setProducts] = useState([]);
   useEffect(() => {
     const saveData =async () => {
@@ -44,12 +46,14 @@ const ProductList = () => {
                     <button
                       type="button"
                       className="px-6 py-2 border rounded-md dark:border-violet-600"
+                      onClick={()=>Navigate(`/productdetails/${item._id}`)}
                     >
                       Add To Cart
                     </button>
                     <button
                       type="button"
                       className="px-6 py-2 border rounded-md dark:bg-violet-600 dark:text-gray-50 dark:border-violet-600"
+                      onClick={()=>Navigate(`/productdetails/${item._id}`)}
                     >
                       Buy Now
                     </button>

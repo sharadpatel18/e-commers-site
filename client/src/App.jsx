@@ -13,6 +13,7 @@ import Admin from "./components/Admin/Admin";
 import { showName } from "./logic/NameShow";
 import { useEffect, useState } from "react";
 import ItemForm from "./components/Admin/ItemForm";
+import Productdetails from "./components/User/Productdetails";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -37,6 +38,7 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="productdetails/:id" element={<Productdetails />} />
             {userData?.isAdmin == true ? (
               <>
                 <Route path="admin" element={<Admin />}  /> 

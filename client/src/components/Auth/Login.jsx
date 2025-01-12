@@ -8,7 +8,6 @@ const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [responceData, setResponceData] = useState({});
-  const [showResponce, setShowResponce] = useState(false);
   const Navigate = useNavigate();
   const { handleChange } = useContext(MyContext)
 
@@ -103,7 +102,6 @@ const LoginComponent = () => {
               >
                 Sign up
               </Link>
-              .
             </p>
           </div>
         </form>
