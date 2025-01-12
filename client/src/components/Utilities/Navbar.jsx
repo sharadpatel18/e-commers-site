@@ -89,6 +89,21 @@ const Navbar = () => {
               history
             </Link>
           </li>
+          {
+            user?.isAdmin
+            ?
+            <li className="flex">
+            <Link
+              rel="noopener noreferrer"
+              to="/admin"
+              className="flex items-center px-4 text-white border-b-2 border-transparent hover:text-violet-400 hover:border-violet-400"
+            >
+              Admin
+            </Link>
+          </li>
+            :
+            null
+          }
         </ul>
         {Object.keys(user).length == 0 ? (
           <div className="items-center flex-shrink-0 hidden lg:flex">
