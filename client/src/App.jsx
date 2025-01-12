@@ -12,6 +12,7 @@ import Contact from "./components/Utilities/Contact";
 import Admin from "./components/Admin/Admin";
 import { showName } from "./logic/NameShow";
 import { useEffect, useState } from "react";
+import ItemForm from "./components/Admin/ItemForm";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -23,7 +24,7 @@ function App() {
       setUserData(Data);
     }
   },[])
-  
+
   return (
     <>
       <BrowserRouter>
@@ -36,7 +37,12 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
-            {userData?.isAdmin == true ? <Route path="admin" element={<Admin />} />: null}
+            {userData?.isAdmin == true ? (
+              <>
+                <Route path="admin" element={<Admin />}  /> 
+                <Route path="createItem" element={<ItemForm />}  />
+              </>
+            ) : null}
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
