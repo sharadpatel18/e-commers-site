@@ -7,17 +7,46 @@ const ProductDetail = () => {
     const {id} = useParams();
     const {Token} = useContext(MyContext);
     const [product , setProduct] = useState({});
+    const [reviewsWithPercentage, setReviewsWithPercentage] = useState([]);
 
+    let reviews = [
+      { stars: 5, count: 0 },
+      { stars: 4, count: 0 },
+      { stars: 3, count: 0 },
+      { stars: 2, count: 0 },
+      { stars: 1, count: 0 },
+    ];
+    
     useEffect(()=>{
         const saveData = async () => {
             const responce = await getOneProductById(id , Token);
-            console.log(responce.item[0]);
-            
             setProduct(responce.item[0]);
         }
         saveData();
     },[])
 
+    useEffect(()=>{
+      if (product?.reviews) {
+     
+        product.reviews.forEach((item) => {
+          const index = 5 - item.rating; 
+          if (index >= 0 && index < reviews.length) {
+            reviews[index].count += 1;
+          }
+        });
+  
+        const totalRatings = product.totalRatings || 0;
+        const reviewsWithPercentage = reviews.map((review) => ({
+          ...review,
+          percentage: totalRatings
+            ? `${((review.count / totalRatings) * 100).toFixed(2)}%`
+            : "0%",
+        }));
+  
+        setReviewsWithPercentage(reviewsWithPercentage);
+      }
+    },[product]);
+    
   return (
     <div className="products flex justify-center items-center p-4">
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg overflow-hidden">
@@ -85,8 +114,8 @@ const ProductDetail = () => {
               </div>
 
             
-              {/* <div className="space-y-2">
-                {product.reviews?.map((review, index) => (
+              <div className="space-y-2">
+                {reviewsWithPercentage?.map((review, index) => (
                   <div key={index} className="flex items-center space-x-2">
                     <span className="w-12 text-sm">{review.stars} star</span>
                     <div className="flex-1 bg-gray-200 rounded h-4 overflow-hidden">
@@ -100,7 +129,7 @@ const ProductDetail = () => {
                     </span>
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
 
             <div className="mt-6 flex space-x-4">
