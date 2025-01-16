@@ -1,24 +1,5 @@
 import React, { useState } from "react";
 
-const countries = [
-  "United States",
-  "Canada",
-  "United Kingdom",
-  "Australia",
-  "India",
-  "Germany",
-  "France",
-  "Italy",
-  "Spain",
-  "China",
-  "Japan",
-  "Brazil",
-  "Mexico",
-  "Russia",
-  "South Africa",
-  // Add more countries here
-];
-
 const CountrySelect = () => {
   const [selectState, setselectState] = useState("");
 

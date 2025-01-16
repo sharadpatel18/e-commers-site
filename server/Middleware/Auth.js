@@ -4,8 +4,7 @@ require("dotenv").config();
 const Authentication = (req, res , next) => {
   
     const Token = req.headers['authentication'];
-    console.log(Token);
-    
+ 
     if (!Token) {
       return res
         .status(403)

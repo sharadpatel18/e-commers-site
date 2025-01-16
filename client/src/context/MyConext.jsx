@@ -7,6 +7,7 @@ const MyContextProvider = ({ children }) => {
   const Token = localStorage.getItem('Token')
   const [showNameBool, setShowNameBool] = useState(false);
   const [user , setUser] = useState({});
+  const [cartProducts , setCartProducts] = useState([]);
 
  useEffect(()=>{
   if (Token) {
@@ -19,8 +20,12 @@ const MyContextProvider = ({ children }) => {
     setShowNameBool(value)
   }
 
+  const handleCartProducts = (value) => {
+    setCartProducts((prev)=>[...prev , value]);
+  }
+
   return (
-    <MyContext.Provider value={{ showNameBool, handleChange , user , Token}}>
+    <MyContext.Provider value={{ showNameBool, handleChange , handleCartProducts , cartProducts , user , Token}}>
       {children}
     </MyContext.Provider>
   );

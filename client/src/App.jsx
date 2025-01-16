@@ -40,6 +40,7 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="order" element={<OrderForm />} />
+            <Route path="order/:id" element={<OrderForm />} />
             <Route path="productdetails/:id" element={<Productdetails />} />
             {userData?.isAdmin == true ? (
               <>

@@ -1,11 +1,13 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { MyContext } from "../../context/myConext";
-import { createProduct } from "../../api/product";
+import { createProduct, getOneProductById } from "../../api/product";
 import Toast from "../ChildComponets/Toast";
 import StateSelect from "../ChildComponets/StateSelect";
 
 const Order = () => {
+  const { id } = useParams();
+  const { user, Token } = useContext(MyContext);
   const [number, setNumber] = useState(0);
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
@@ -15,8 +17,25 @@ const Order = () => {
   const [country, setCountry] = useState("");
   const [responceData, setResponceData] = useState({});
   const [showResponce, setShowResponce] = useState(false);
-  const { user, Token } = useContext(MyContext);
+  const [price, setPrice] = useState(0);
+  const [stoke, setStoke] = useState(1);
+  const [cartProducts, setCartProducts] = useState([]);
 
+  useEffect(() => {
+    const saveData = async () => {
+      const res = await getOneProductById(id, Token);
+      setCartProducts((prev) => {
+        const exists = prev.some((product) => product.id === res.item.id);
+        if (!exists) {
+          return [...prev, res.item];
+        }
+        return prev;
+      });
+    };
+    saveData();
+  }, [id, Token]);
+  console.log(cartProducts);
+  
   const handleSubmit = (e) => {};
 
   return (
@@ -24,12 +43,64 @@ const Order = () => {
       <div className="flex products-container flex-col max-w-md rounded-md sm:p-10 dark:bg-gray-50 dark:text-gray-800">
         <div className="mb-8 text-center">
           {/* {showResponce ? <Toast message={responceData.message} /> : null} */}
-          <h1 className="my-3 text-4xl font-bold">Item Form To Create</h1>
+          <h1 className="my-3 text-4xl font-bold">Order Form To Buy product</h1>
           <p className="text-sm dark:text-gray-600">
             Order Form to Order your item
           </p>
         </div>
         <form noValidate="" className="space-y-12" onSubmit={handleSubmit}>
+          {cartProducts?.map((item , index) => {
+            return (
+              <div className="space-y-4">
+                <label htmlFor="password" className="text-lg">
+                    <b> Product {index + 1} : </b>
+                  </label>
+                <div className="flex justify-between">
+                  <label htmlFor="password" className="text-sm">
+                    Item Name
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  name="password"
+                  id="password"
+                  className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
+                  placeholder="0"
+                  value={item.itemName}
+                />
+                <div className="flex justify-between ">
+                  <label htmlFor="password" className="text-sm">
+                    Stoke
+                  </label>
+                </div>
+                <input
+                  type="number"
+                  name="password"
+                  id="password"
+                  className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
+                  placeholder="0"
+                  max={item.itemStoke}
+                  min={1}
+                  value={stoke}
+                  onChange={(e)=>setStoke(e.target.value)}
+                
+                />
+                <div className="flex justify-between">
+                  <label htmlFor="password" className="text-sm">
+                    Price
+                  </label>
+                </div>
+                <input
+                  type="number"
+                  name="password"
+                  id="password"
+                  className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
+                  placeholder="0"
+                  value={item.itemPrice}
+                />
+              </div>
+            );
+          })}
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block mb-2 text-sm">

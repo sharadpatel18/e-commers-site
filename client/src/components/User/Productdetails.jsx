@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getOneProductById } from "../../api/product";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MyContext } from "../../context/MyConext";
 
 const ProductDetail = () => {
     const {id} = useParams();
-    const {Token} = useContext(MyContext);
+    const Navigate = useNavigate();
+    const {Token , handleCartProducts  } = useContext(MyContext);
     const [product , setProduct] = useState({});
     const [reviewsWithPercentage, setReviewsWithPercentage] = useState([]);
 
@@ -20,7 +21,9 @@ const ProductDetail = () => {
     useEffect(()=>{
         const saveData = async () => {
             const responce = await getOneProductById(id , Token);
-            setProduct(responce.item[0]);
+            console.log(responce);
+            
+            setProduct(responce.item);
         }
         saveData();
     },[])
@@ -46,6 +49,12 @@ const ProductDetail = () => {
         setReviewsWithPercentage(reviewsWithPercentage);
       }
     },[product]);
+    
+    const handleBuy = () => {
+      handleCartProducts(product);
+      console.log(id);
+      Navigate(`/order/${id}`)
+    }
     
   return (
     <div className="products flex justify-center items-center p-4">
@@ -139,7 +148,7 @@ const ProductDetail = () => {
               >
                 Add to Cart
               </button>
-              <button className="flex-1 px-6 py-3 bg-gray-100 text-gray-800 rounded-lg shadow-md hover:bg-gray-200">
+              <button onClick={handleBuy} className="flex-1 px-6 py-3 bg-gray-100 text-gray-800 rounded-lg shadow-md hover:bg-gray-200">
                 Buy Now
               </button>
             </div>

@@ -32,6 +32,8 @@ const getAllProducts = async (Token) => {
 }
 
 const getOneProductById = async (id,Token) => {
+    console.log(id);
+    
     try {
         const responce = await instance.get(`/getitembyid/${id}` , {
             headers:{

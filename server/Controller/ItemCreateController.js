@@ -35,15 +35,17 @@ const getAllItem = async (req,res) => {
 
 
 const getItemById = async (req,res) => {
+    const {id} = req.params;
+    console.log(id);
+    
+    const findItem = await Item.findById(id);
     try {
-        const {id} = req.params;
-
-        const findItem = await Item.find({_id:id});
-
+        
+        
         return res.status(200)
                     .json({message:"this is selected item" , item:findItem , success:true})
     } catch (error) {
-
+  
         return res.status(500)
                     .json({message:"internal server error" , success:false})
 
